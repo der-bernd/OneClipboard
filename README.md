@@ -1,4 +1,4 @@
-# StudiCar
+# OneClipboard
 ## Getting started
 ### Prerequisites
 - Git
@@ -9,7 +9,7 @@
 
 ### To clone Github-Repository:
 ```bash
-git clone https://[Github-Username]:[Github_password]@github.com/F1nnM/StudiCar.git
+git clone https://[Github-Username]:[Github_password]@github.com/der-bernd/OneClipboard.git
 ```
 ### Running local version
 #### (Optional) Set up VS Code to show npm scripts
