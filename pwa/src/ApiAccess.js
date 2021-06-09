@@ -1,8 +1,5 @@
-import Firebase from "firebase/app";
-import "firebase/auth";
-
 export const ApiBasePath = process.env.DEV
-  ? "https://" + window.location.hostname
+  ? "http://" + window.location.hostname
   : window.location.hostname.startsWith("dev")
   ? "https://dev.api.studicar.mfinn.de"
   : "https://api.studicar.mfinn.de";
@@ -23,40 +20,17 @@ export function sendApiRequest(
 
   var axios = require("axios");
 
-  Firebase.auth()
-    .currentUser.getIdToken(/* forceRefresh */ true)
-    .then(idToken_ => {
-      options.idtoken = idToken_;
-      if (action.method === "GET") {
-        axios
-          .get(ApiBasePath + action.path, { params: options })
-          .then(response => successCallback(response.data, response))
-          .catch(err => errorCallback(err.response));
-      } else if (action.method === "POST") {
-        axios
-          .post(ApiBasePath + action.path, options)
-          .then(response => successCallback(response.data, response))
-          .catch(err => errorCallback(err.response));
-      }
-    })
-    .catch(error => {
-      throw error;
-    });
-}
-
-export async function buildGetRequestUrl(action, options) {
-  const idToken_ = await Firebase.auth()
-    .currentUser.getIdToken(/* forceRefresh */ true)
-    .catch(err => {
-      throw err;
-    });
-  let url = ApiBasePath + action.path;
-  url += "?idtoken=" + encodeURIComponent(idToken_);
-  Object.keys(options).forEach(key => {
-    url +=
-      "&" + encodeURIComponent(key) + "=" + encodeURIComponent(options[key]);
-  });
-  return Promise.resolve(url);
+  if (action.method === "GET") {
+    axios
+      .get(ApiBasePath + action.path, { params: options })
+      .then(response => successCallback(response.data, response))
+      .catch(err => errorCallback(err.response));
+  } else if (action.method === "POST") {
+    axios
+      .post(ApiBasePath + action.path, options)
+      .then(response => successCallback(response.data, response))
+      .catch(err => errorCallback(err.response));
+  }
 }
 
 export const SQL_TEST_READ = {

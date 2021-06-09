@@ -1,14 +1,22 @@
 <template>
   <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
-    >
+    LOREM
   </q-page>
 </template>
 
 <script>
+import { sendApiRequest, TEST_API } from "../ApiAccess";
 export default {
-  name: 'PageIndex'
-}
+  name: "PageIndex",
+  mounted() {
+    sendApiRequest(
+      TEST_API,
+      {},
+      data => {},
+      err => {
+        alert(err);
+      }
+    );
+  }
+};
 </script>
