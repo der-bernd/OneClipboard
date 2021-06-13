@@ -11,3 +11,6 @@ news/postillon/*.json
 
 # ignoring all the modules
 node_modules/
+
+data.json
+# just in case this repo will be public some time
