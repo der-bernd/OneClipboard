@@ -13,10 +13,18 @@ function isOptionMissing(data, needed, res) {
   });
 }
 
-function endWithJSON(res, JSON) {
-  if (res.sent == true) return;
+function sortAndReturnWithFileContent(res, content, deviceId) {
+  content.sort((a, b) => {
+    var check1 = +(a.id == deviceId),
+      check2 = +(b.id == deviceId);
+    return check2 - check1; // somehow < operator didn't work
+  });
   res.setHeader("Content-Type", "application/json");
-  res.end(JSON);
+  res.end(
+    JSON.stringify({
+      data: content,
+    })
+  );
 }
 
 async function readFromFile() {
@@ -44,7 +52,7 @@ module.exports = {
   POST: {
     "/apiTest": async (req, res, options) => {
       if (!isOptionMissing(options, ["name"], res)) {
-        endWithJSON(
+        sortAndReturnWithFileContent(
           res,
           JSON.stringify({
             msg: "Hello, " + options.name,
@@ -69,13 +77,7 @@ module.exports = {
             (err) => console.log
           );
         }
-        endWithJSON(
-          res,
-          JSON.stringify({
-            id: options.id,
-            data: fileContent,
-          })
-        );
+        sortAndReturnWithFileContent(res, fileContent, options.id);
       }
     },
 
@@ -87,6 +89,7 @@ module.exports = {
           ).clipboard;
         if (!deviceClipboard.includes(options.data)) {
           deviceClipboard.unshift(options.data);
+          while (deviceClipboard.length > 3) deviceClipboard.pop();
         }
         fs.writeFile(
           filepath,
@@ -94,13 +97,7 @@ module.exports = {
           (err) => console.log
         );
 
-        endWithJSON(
-          res,
-          JSON.stringify({
-            id: options.id,
-            data: fileContent,
-          })
-        );
+        sortAndReturnWithFileContent(res, fileContent, options.id);
       }
     },
 
@@ -108,13 +105,7 @@ module.exports = {
       if (!isOptionMissing(options, ["id"], res)) {
         var fileContent = await readFromFile();
 
-        endWithJSON(
-          res,
-          JSON.stringify({
-            id: options.id,
-            data: fileContent,
-          })
-        );
+        sortAndReturnWithFileContent(res, fileContent, options.id);
       }
     },
   },

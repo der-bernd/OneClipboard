@@ -53,7 +53,7 @@ module.exports = function(ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ["Dialog", "Notify", "AddressbarColor"]
+      plugins: ["Dialog", "Notify", "AppVisibility"]
     },
 
     // https://quasar.dev/quasar-cli/cli-documentation/supporting-ie
@@ -112,9 +112,9 @@ module.exports = function(ctx) {
         skipWaiting: true // found in https://forum.quasar-framework.org/topic/2560/solved-pwa-force-refresh-when-new-version-released/28
       }, // only for GenerateSW
       manifest: {
-        name: "StudiCar",
-        short_name: "StudiCar",
-        description: "Green.Cheap.Social",
+        name: "OneClipboard",
+        short_name: "OneClipboard",
+        description: "Share clipboard between your devices",
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",
@@ -178,7 +178,7 @@ module.exports = function(ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "studicar"
+        appId: "oneclipboard"
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
