@@ -1,5 +1,5 @@
 export const ApiBasePath = process.env.DEV
-  ? "http://" + window.location.hostname
+  ? "https://" + window.location.hostname
   : window.location.hostname.startsWith("dev")
   ? "https://dev.api.studicar.mfinn.de"
   : "https://api.studicar.mfinn.de";

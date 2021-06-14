@@ -151,13 +151,12 @@ export default {
     },
     tryReading(done) {
       console.log("checkin clipboard");
-      setTimeout(done, 2000); // auto stop animation after 5sec
       this.askAndReadClipboard()
         .then(data => {
           this.working = true;
           this.gotContent(data, done);
         })
-        .catch(_ => {
+        .catch(err => {
           this.working = false;
         });
     },
@@ -169,14 +168,15 @@ export default {
         return new Promise((res, rej) => {
           clipboard
             .readText()
-            .then(data => {
-              res(data);
+            .then(content => {
+              console.warn("content detected: " + content);
+              res(content);
             })
             .catch(err => {
               rej(err);
             });
         });
-      }
+      } else return Promise.resolve("");
     },
 
     gotContent(data, done) {
@@ -247,6 +247,7 @@ export default {
   },
   mounted() {
     this.signInOrRegister();
+    this.tryReading(_ => {});
   }
 };
 </script>

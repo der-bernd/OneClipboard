@@ -5,15 +5,15 @@ if (typeof (PhusionPassenger) !== 'undefined') {
   var http = require('http');
   server = http.createServer();
 } else {
-  var https = require('http');
+  var https = require('https');
   const fs = require('fs');
 
-  /* const options = {
+  const options = {
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.pem')
-  }; */
+  };
 
-  server = https.createServer();
+  server = https.createServer(options);
 }
 
 
@@ -82,5 +82,5 @@ server.on('request', async (req, res) => {
 if (typeof (PhusionPassenger) !== 'undefined') {
   server.listen('passenger');
 } else {
-  server.listen(80);
+  server.listen(443);
 }
